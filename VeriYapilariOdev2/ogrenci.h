@@ -39,6 +39,7 @@ struct ogrenciListesi
 	void ara(string pattern, int type);
 	void ogrenciAra();
 	void ogrenciSil();
+	void dersSil();
 };
 
 // Kendisine verilen ogrenciyi ekrana yazdiran algoritma
@@ -326,6 +327,7 @@ void ogrenciListesi::ogrenciAra() {
 	}
 }
 
+// Ogrenci numarasina gore ogrenci ve dersleri silinir.
 void ogrenciListesi::ogrenciSil() {
 
 	string ogrenciNo;
@@ -357,5 +359,53 @@ void ogrenciListesi::ogrenciSil() {
 		dugumSayisi--;
 		cout << "Ogrenci basariyla silindi" << endl;
 		return;	
+	}
+}
+
+// Ogrenci numarasi ve ders koduna gore ogrenci ilgili dersten cikarilir
+void ogrenciListesi::dersSil() {
+
+	string ogrenciNo, dersKodu;
+
+	cout << "Ogrenci No Giriniz :>" << endl;
+	cin >> ogrenciNo;	
+	
+	cout << "Ders Kodu Giriniz :>" << endl;
+	cin >> dersKodu;
+
+	ogrenci* tara;
+	tara = baslangic;
+
+	while (tara)
+	{
+		if (tara && strcmp(tara->ogrno, ogrenciNo.c_str()) == 0)
+		{
+			ders* dersTara, * arka{};
+			dersTara = tara->dersdugumu;
+
+			while (dersTara && (strcmp(dersTara->derskodu, dersKodu.c_str()) != 0))
+			{
+				arka = dersTara;
+				dersTara = dersTara->sonraki;
+			}
+
+			if (dersTara && strcmp(dersTara->derskodu, dersKodu.c_str()) == 0)
+			{
+				if (arka != NULL)
+				{
+					arka->sonraki = dersTara->sonraki;
+				}
+				else {
+					tara->dersdugumu = tara->dersdugumu->sonraki;
+				}
+
+				delete dersTara;
+				cout << "Ders basariyla silindi" << endl;
+				return;
+			}
+
+			return;
+		}
+		tara = tara->sonraki;
 	}
 }

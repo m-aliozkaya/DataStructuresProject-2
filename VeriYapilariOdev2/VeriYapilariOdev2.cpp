@@ -9,8 +9,7 @@ ogrenciListesi defter;
 
 void menuyazdir()
 {
-    cout << endl
-        << endl;
+    cout << endl << endl;
     cout << "Ogrenci Listesi Uygulamasi" << endl;
     cout << "Bir islem seciniz" << endl;
     cout << "A: Kayitlari Listele" << endl;
@@ -48,6 +47,7 @@ bool islemyap(char secim)
         break;
     case 'T':
     case 't':
+        defter.dersSil();
         break;
     case 'C':
     case 'c':
