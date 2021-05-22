@@ -38,6 +38,7 @@ struct ogrenciListesi
 	void kapat();
 	void ara(string pattern, int type);
 	void ogrenciAra();
+	void ogrenciSil();
 };
 
 // Kendisine verilen ogrenciyi ekrana yazdiran algoritma
@@ -271,28 +272,28 @@ void ogrenciListesi::kapat()
 // Kendisine verilen ogrenciyi pattern ve tipine gore (numara ya da soyad) bulur
 void ogrenciListesi::ara(string pattern, int type)
 {
-    ogrenci *tara;
-    tara = baslangic;
+	ogrenci* tara;
+	tara = baslangic;
 	string aranacak;
 
-    while (tara)
-    {
+	while (tara)
+	{
 		if (type == 1)
 		{
 			aranacak = tara->ogrno;
 		}
-		else 
+		else
 		{
 			aranacak = tara->soyad;
 		}
 
-        if (strncmp(aranacak.c_str(), pattern.c_str(), strlen(pattern.c_str())) == 0)
-        {
+		if (strncmp(aranacak.c_str(), pattern.c_str(), strlen(pattern.c_str())) == 0)
+		{
 			yazdir(tara);
-        }
+		}
 
-        tara = tara->sonraki;
-    }
+		tara = tara->sonraki;
+	}
 
 }
 
@@ -312,7 +313,7 @@ void ogrenciListesi::ogrenciAra() {
 		cout << "Numarasini giriniz" << endl;
 		cin >> pattern;
 		ara(pattern, 1);
-		break;	
+		break;
 	case 'S':
 	case 's':
 		cout << "Soyadini giriniz" << endl;
@@ -322,5 +323,39 @@ void ogrenciListesi::ogrenciAra() {
 	default:
 		cout << "Lütfen doğru bir seçeneği işaretleyiniz";
 		break;
+	}
+}
+
+void ogrenciListesi::ogrenciSil() {
+
+	string ogrenciNo;
+
+	cout << "Ogrenci No Giriniz :>" << endl;
+	cin >> ogrenciNo;
+
+	ogrenci* tara, * arka{};
+	tara = baslangic;
+
+	while (tara && (strcmp(tara->ogrno, ogrenciNo.c_str()) != 0))
+	{
+		arka = tara;
+		tara = tara->sonraki;
+	}
+
+	if (tara && strcmp(tara->ogrno, ogrenciNo.c_str()) == 0)
+	{
+		if (arka != NULL)
+		{
+			arka->sonraki = tara->sonraki;
+		}
+		else {
+			baslangic = baslangic->sonraki;
+		}
+
+		delete tara->dersdugumu;
+		delete tara;
+		dugumSayisi--;
+		cout << "Ogrenci basariyla silindi" << endl;
+		return;	
 	}
 }

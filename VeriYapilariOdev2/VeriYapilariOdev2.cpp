@@ -44,6 +44,7 @@ bool islemyap(char secim)
         break;
     case 'S':
     case 's':
+        defter.ogrenciSil();
         break;
     case 'T':
     case 't':
